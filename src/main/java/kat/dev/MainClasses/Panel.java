@@ -15,17 +15,28 @@ public class Panel extends JPanel {
     private MouseEvents mouseEvents;
     private float xDelta = 100;
     private float yDelta = 100;
-    private BufferedImage img, subImg;
+    private BufferedImage img;
+    private BufferedImage[] idle;
+    private int animationTick, animationIndex, animationSpeed = 30;
 
     public Panel(){
         mouseEvents = new MouseEvents(this);
         importImg();
+        loadAnimations();
         setPanelSize();
         setFocusable(true);
         addKeyListener(new KeyboardEvents(this));
         addMouseListener(mouseEvents);
         addMouseMotionListener(mouseEvents);
 
+    }
+
+    private void loadAnimations() {
+        idle = new BufferedImage[5];
+
+        for(int i = 0; i < idle.length; i++){
+            idle[i] = img.getSubimage(i*64, 0, 64, 40);
+        }
     }
 
     private void importImg() {
@@ -63,12 +74,25 @@ public class Panel extends JPanel {
         this.yDelta += num;
     }
 
+    private void updateAnimationTick() {
+        animationTick++;
+        if(animationTick >= animationSpeed){
+            animationTick = 0;
+            animationIndex++;
+            if(animationIndex >= idle.length){
+                animationIndex = 0;
+            }
+        }
+    }
+
     public void paint(Graphics g){
         super.paint(g);
 
-        subImg = img.getSubimage(1*64,8*40,64,40);
-        g.drawImage(subImg,(int)xDelta,(int)yDelta,128,80,null);
+        updateAnimationTick();
+        g.drawImage(idle[animationIndex], (int)xDelta, (int)yDelta, 120,80,null);
+        
 
     }
+
 
 }
