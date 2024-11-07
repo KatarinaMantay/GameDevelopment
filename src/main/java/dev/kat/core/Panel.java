@@ -1,7 +1,7 @@
-package dev.kat.MainClasses;
+package dev.kat.core;
 
-import dev.kat.EventListeners.KeyboardEvents;
-import dev.kat.EventListeners.MouseEvents;
+import dev.kat.eventListeners.KeyboardEvents;
+import dev.kat.eventListeners.MouseEvents;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static dev.kat.utilities.Constants.PlayerConstants.*;
+import static dev.kat.utilities.Constants.Directions.*;
 
 public class Panel extends JPanel {
 
@@ -20,6 +21,8 @@ public class Panel extends JPanel {
     private BufferedImage[][] animations;
     private int animationTick, animationIndex, animationSpeed = 15;
     private int playerAction = IDLE;
+    private int playerDirection = -1;
+    private boolean moving = false;
 
     public Panel(){
         mouseEvents = new MouseEvents(this);
@@ -64,24 +67,20 @@ public class Panel extends JPanel {
     }
 
     private void setPanelSize() {
-        Dimension size = new Dimension(1024, 640);
+        Dimension size = new Dimension(800, 500);
 
         setMinimumSize(size);
         setPreferredSize(size);
         setMaximumSize(size);
     }
 
-    public void setRectPosition(int x, int y){
-        this.xChanges = x;
-        this.yChanges = y;
+    public void setDirection(int direction) {
+        this.playerDirection = direction;
+        moving = true;
     }
 
-    public void changeXPos(int num){
-        this.xChanges += num;
-    }
-
-    public void changeYPos(int num){
-        this.yChanges += num;
+    public void setMoving(boolean moving){
+        this.moving = moving;
     }
 
     private void updateAnimationTick() {
@@ -98,14 +97,56 @@ public class Panel extends JPanel {
 
     }
 
+    private void setAnimation() {
+        if (moving) {
+            if (playerAction == IDLE) {
+                animationIndex = 0;
+                playerAction = RUNNING;
+            }
+        } else {
+            if (playerAction == RUNNING) {
+                animationIndex = 0;
+                playerAction = IDLE;
+            }
+        }
+
+    }
+
+    private void updatePosition() {
+        if(moving){
+
+            switch(playerDirection){
+
+                case LEFT:
+                    xChanges -= 5;
+                    break;
+
+                case UP:
+                    yChanges-=5;
+                    break;
+
+                case RIGHT:
+                    xChanges += 5;
+                    break;
+
+                case DOWN:
+                    yChanges += 5;
+                    break;
+            }
+        }
+    }
+
     public void paint(Graphics g){
         super.paint(g);
 
+        setAnimation();
+        updatePosition();
         updateAnimationTick();
         g.drawImage(animations[playerAction][animationIndex], (int)xChanges, (int) yChanges, 120,80,null);
         
 
     }
+
 
 
 }

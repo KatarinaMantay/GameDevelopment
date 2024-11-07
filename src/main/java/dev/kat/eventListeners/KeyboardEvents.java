@@ -1,9 +1,10 @@
-package dev.kat.EventListeners;
+package dev.kat.eventListeners;
 
-import dev.kat.MainClasses.Panel;
+import dev.kat.core.Panel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import static dev.kat.utilities.Constants.Directions.*;
 
 public class KeyboardEvents implements KeyListener {
 
@@ -25,22 +26,32 @@ public class KeyboardEvents implements KeyListener {
         switch(e.getKeyCode()){
 
             case KeyEvent.VK_W:
-                panel.changeYPos(-5);
+                panel.setDirection(UP);
                 break;
             case KeyEvent.VK_A:
-                panel.changeXPos(-5);
+                panel.setDirection(LEFT);
                 break;
             case KeyEvent.VK_S:
-                panel.changeYPos(5);
+                panel.setDirection(DOWN);
                 break;
             case KeyEvent.VK_D:
-                panel.changeXPos(5);
+                panel.setDirection(RIGHT);
                 break;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+
+        switch(e.getKeyCode()){
+
+            case KeyEvent.VK_W:
+            case KeyEvent.VK_A:
+            case KeyEvent.VK_S:
+            case KeyEvent.VK_D:
+                panel.setMoving(false);
+                break;
+        }
 
     }
 }

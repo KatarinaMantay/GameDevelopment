@@ -1,6 +1,6 @@
-package dev.kat.EventListeners;
+package dev.kat.eventListeners;
 
-import dev.kat.MainClasses.Panel;
+import dev.kat.core.Panel;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -45,7 +45,6 @@ public class MouseEvents implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        panel.setRectPosition(e.getX(), e.getY());
 
     }
 }

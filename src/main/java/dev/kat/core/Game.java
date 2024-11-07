@@ -1,4 +1,4 @@
-package dev.kat.MainClasses;
+package dev.kat.core;
 
 public class Game implements Runnable {
     private FrameWindow window;

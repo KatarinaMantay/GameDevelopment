@@ -1,4 +1,4 @@
-package dev.kat.MainClasses;
+package dev.kat.core;
 
 import javax.swing.*;
 
