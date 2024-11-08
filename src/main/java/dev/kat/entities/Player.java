@@ -2,14 +2,14 @@ package dev.kat.entities;
 
 import dev.kat.enums.Direction;
 import dev.kat.enums.PlayerAction;
+import dev.kat.enums.SpriteAtlas;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
+import dev.kat.utilities.LoadSave;
+
 
 public class Player extends Entity {
     private BufferedImage[][] animations;
@@ -21,8 +21,8 @@ public class Player extends Entity {
 
     private final Set<Direction> pressedDirections;
 
-    public Player(float x, float y) {
-        super(x, y);
+    public Player(float x, float y, int width, int height) {
+        super(x, y, width, height);
         loadAnimations();
         pressedDirections = new HashSet<>();
     }
@@ -118,9 +118,7 @@ public class Player extends Entity {
     }
 
     private void loadAnimations() {
-        InputStream stream = getClass().getResourceAsStream("/player_sprites.png");
-        try {
-            BufferedImage image = ImageIO.read(stream);
+            BufferedImage image = LoadSave.getSpriteAtlas(SpriteAtlas.PLAYER_ATLAS);
             animations = new BufferedImage[PlayerAction.values().length][];
             for (PlayerAction action : PlayerAction.values()) {
                 int actionIndex = action.getValue();
@@ -129,17 +127,6 @@ public class Player extends Entity {
                     animations[actionIndex][i] = image.getSubimage(i * 64, actionIndex * 40, 64, 40);
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (stream != null) {
-                    stream.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void resetDir() {

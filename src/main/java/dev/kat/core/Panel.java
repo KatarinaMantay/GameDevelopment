@@ -12,6 +12,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static dev.kat.Config.GAME_HEIGHT;
+import static dev.kat.Config.GAME_WIDTH;
+
 public class Panel extends JPanel {
 
     private MouseEvents mouseEvents;
@@ -31,7 +34,7 @@ public class Panel extends JPanel {
     }
 
     private void setPanelSize() {
-        Dimension size = new Dimension(800, 500);
+        Dimension size = new Dimension(GAME_WIDTH, GAME_HEIGHT);
 
         setMinimumSize(size);
         setPreferredSize(size);

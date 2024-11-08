@@ -1,8 +1,11 @@
 package dev.kat.core;
 
 import dev.kat.entities.Player;
+import dev.kat.levels.LevelManager;
 
 import java.awt.*;
+
+import static dev.kat.Config.SCALE;
 
 public class Game {
     private FrameWindow window;
@@ -10,6 +13,7 @@ public class Game {
     private Thread thread;
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
+    private LevelManager levelManager;
 
     private Player player;
 
@@ -22,15 +26,19 @@ public class Game {
     }
 
     private void initalizeClasses() {
-        player = new Player(200,200);
+        player = new Player(200,200, (int)(64*SCALE), (int)(40*SCALE));
+        levelManager = new LevelManager(this);
     }
 
     public void update() {
         player.update();
+        levelManager.updateLevel();
     }
 
     public void render(Graphics g) {
+        levelManager.drawLevel(g);
         player.render(g);
+
     }
 
     public void start() {
