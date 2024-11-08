@@ -1,5 +1,7 @@
 package dev.kat.core;
 
+import dev.kat.enums.Direction;
+import dev.kat.enums.PlayerAction;
 import dev.kat.eventListeners.KeyboardEvents;
 import dev.kat.eventListeners.MouseEvents;
 import javax.imageio.ImageIO;
@@ -9,9 +11,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static dev.kat.utilities.Constants.PlayerConstants.*;
-import static dev.kat.utilities.Constants.Directions.*;
-
 public class Panel extends JPanel {
 
     private MouseEvents mouseEvents;
@@ -20,8 +19,8 @@ public class Panel extends JPanel {
     private BufferedImage image;
     private BufferedImage[][] animations;
     private int animationTick, animationIndex, animationSpeed = 15;
-    private int playerAction = IDLE;
-    private int playerDirection = -1;
+    private PlayerAction playerAction = PlayerAction.IDLE;
+    private Direction playerDirection = Direction.NONE;
     private boolean moving = false;
 
     public Panel(){
@@ -42,7 +41,7 @@ public class Panel extends JPanel {
     private void loadAnimations() {
         animations = new BufferedImage[9][6];
 
-        for(int j = 0; j < animations.length; j++){
+        for (int j = 0; j < animations.length; j++){
             for(int i = 0; i < animations[j].length; i++){
                 animations[j][i] = image.getSubimage(i*64, j*40, 64, 40);
             }
@@ -80,7 +79,7 @@ public class Panel extends JPanel {
         setMaximumSize(size);
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(Direction direction) {
         this.playerDirection = direction;
         moving = true;
     }
@@ -92,11 +91,11 @@ public class Panel extends JPanel {
     private void updateAnimationTick() {
         animationTick++;
 
-        if(animationTick >= animationSpeed){
+        if (animationTick >= animationSpeed){
             animationTick = 0;
             animationIndex++;
 
-            if(animationIndex >= GetSpriteAmount(playerAction)){
+            if (animationIndex >= playerAction.getSpriteAmount()){
                 animationIndex = 0;
             }
         }
@@ -104,22 +103,18 @@ public class Panel extends JPanel {
     }
 
     private void setAnimation() {
-        if (moving) {
-            if (playerAction == IDLE) {
-                animationIndex = 0;
-                playerAction = RUNNING;
-            }
-        } else {
-            if (playerAction == RUNNING) {
-                animationIndex = 0;
-                playerAction = IDLE;
-            }
+        if (moving && playerAction == PlayerAction.IDLE) {
+            animationIndex = 0;
+            playerAction = PlayerAction.RUNNING;
         }
-
+        else if (playerAction == PlayerAction.RUNNING) {
+            animationIndex = 0;
+            playerAction = PlayerAction.IDLE;
+        }
     }
 
     private void updatePosition() {
-        if(moving){
+        if (moving) {
 
             switch(playerDirection){
                 case LEFT -> xChanges -= 5;
