@@ -1,1 +1,1 @@
-Following Platformer Tutorial on YT -- (OG by Kaarin Gaming)
+Based on tutorial by Kaarin Gaming on YT
