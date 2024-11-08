@@ -81,4 +81,7 @@ public class Game {
     }
 
 
+    public void windowFocusLost() {
+        player.resetDir();
+    }
 }

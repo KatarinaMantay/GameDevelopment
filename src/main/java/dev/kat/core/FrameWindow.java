@@ -1,6 +1,8 @@
 package dev.kat.core;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 
 public class FrameWindow {
     private JFrame frame;
@@ -13,5 +15,17 @@ public class FrameWindow {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        frame.addWindowFocusListener(new WindowFocusListener() {
+
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                panel.getGame().windowFocusLost();
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+
+            }
+        });
     }
 }
