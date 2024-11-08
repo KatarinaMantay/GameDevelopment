@@ -66,6 +66,12 @@ public class Panel extends JPanel {
         }
     }
 
+    public void updateGame(){
+        setAnimation();
+        updatePosition();
+        updateAnimationTick();
+    }
+
     private void setPanelSize() {
         Dimension size = new Dimension(800, 500);
 
@@ -116,35 +122,24 @@ public class Panel extends JPanel {
         if(moving){
 
             switch(playerDirection){
-
-                case LEFT:
-                    xChanges -= 5;
-                    break;
-
-                case UP:
-                    yChanges-=5;
-                    break;
-
-                case RIGHT:
-                    xChanges += 5;
-                    break;
-
-                case DOWN:
-                    yChanges += 5;
-                    break;
+                case LEFT -> xChanges -= 5;
+                case UP -> yChanges -= 5;
+                case RIGHT -> xChanges += 5;
+                case DOWN -> yChanges += 5;
             }
         }
     }
 
     public void paint(Graphics g){
         super.paint(g);
-
-        setAnimation();
-        updatePosition();
-        updateAnimationTick();
-        g.drawImage(animations[playerAction][animationIndex], (int)xChanges, (int) yChanges, 120,80,null);
-        
-
+        g.drawImage(
+                animations[playerAction.getValue()][animationIndex],
+                (int)xChanges,
+                (int) yChanges,
+                120,
+                80,
+                null
+        );
     }
 
 
