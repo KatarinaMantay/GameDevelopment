@@ -1,5 +1,9 @@
 package dev.kat.core;
 
+import dev.kat.entities.Player;
+
+import java.awt.*;
+
 public class Game {
     private FrameWindow window;
     private Panel panel;
@@ -7,16 +11,26 @@ public class Game {
     private final int FPS_SET = 120;
     private final int UPS_SET = 200;
 
+    private Player player;
+
     public Game() {
-        panel = new Panel();
+        initalizeClasses();
+        panel = new Panel(this);
         window = new FrameWindow(panel);
 
         panel.requestFocus();
     }
 
+    private void initalizeClasses() {
+        player = new Player(200,200);
+    }
 
     public void update() {
-        panel.updateGame();
+        player.update();
+    }
+
+    public void render(Graphics g) {
+        player.render(g);
     }
 
     public void start() {
@@ -60,6 +74,10 @@ public class Game {
             }
 
         }
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 
 

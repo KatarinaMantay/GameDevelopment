@@ -2,7 +2,6 @@ package dev.kat.enums;
 
 public enum PlayerAction {
 
-
     IDLE(0),
     RUNNING(1),
     JUMP(2),
@@ -14,7 +13,6 @@ public enum PlayerAction {
     ATTACK_JUMP_2(8);
 
     private final int value;
-
 
     PlayerAction(int i) {
         this.value = i;
@@ -32,6 +30,7 @@ public enum PlayerAction {
             case ATTACK_1, ATTACK_JUMP_2, ATTACK_JUMP_1 -> 3;
             case GROUND -> 2;
             default -> 1;
+
         };
     }
 }

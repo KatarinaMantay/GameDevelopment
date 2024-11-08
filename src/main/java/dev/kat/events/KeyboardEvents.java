@@ -1,4 +1,4 @@
-package dev.kat.eventListeners;
+package dev.kat.events;
 
 import dev.kat.core.Panel;
 import dev.kat.enums.Direction;
@@ -23,10 +23,11 @@ public class KeyboardEvents implements KeyListener {
     public void keyPressed(KeyEvent e) {
 
         switch (e.getKeyCode()) {
-            case KeyEvent.VK_W -> panel.setDirection(Direction.UP);
-            case KeyEvent.VK_A -> panel.setDirection(Direction.LEFT);
-            case KeyEvent.VK_S -> panel.setDirection(Direction.DOWN);
-            case KeyEvent.VK_D -> panel.setDirection(Direction.RIGHT);
+
+            case KeyEvent.VK_W -> panel.getGame().getPlayer().setDirection(Direction.UP);
+            case KeyEvent.VK_A -> panel.getGame().getPlayer().setDirection(Direction.LEFT);
+            case KeyEvent.VK_S -> panel.getGame().getPlayer().setDirection(Direction.DOWN);
+            case KeyEvent.VK_D -> panel.getGame().getPlayer().setDirection(Direction.RIGHT);
         }
     }
 
@@ -34,11 +35,12 @@ public class KeyboardEvents implements KeyListener {
     public void keyReleased(KeyEvent e) {
 
         switch (e.getKeyCode()) {
+
             case KeyEvent.VK_W,
                  KeyEvent.VK_A,
                  KeyEvent.VK_S,
                  KeyEvent.VK_D
-                    -> panel.setMoving(false);
+                    -> panel.getGame().getPlayer().setMoving(false);
         }
 
     }

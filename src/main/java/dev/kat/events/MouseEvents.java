@@ -1,4 +1,4 @@
-package dev.kat.eventListeners;
+package dev.kat.events;
 
 import dev.kat.core.Panel;
 
@@ -11,6 +11,7 @@ public class MouseEvents implements MouseListener, MouseMotionListener {
     private Panel panel;
     public MouseEvents(Panel panel) {
         this.panel = panel;
+
     }
 
     @Override
