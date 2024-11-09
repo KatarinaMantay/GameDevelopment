@@ -1,16 +1,10 @@
 package dev.kat.core;
 
-import dev.kat.enums.Direction;
-import dev.kat.enums.PlayerAction;
 import dev.kat.events.KeyboardEvents;
 import dev.kat.events.MouseEvents;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 import static dev.kat.Config.GAME_HEIGHT;
 import static dev.kat.Config.GAME_WIDTH;

@@ -1,9 +1,10 @@
 plugins {
     id 'java'
+    id("com.github.johnrengelman.shadow") version("8.1.1")
 }
 
-group = 'kat.dev'
-version = '1.0-SNAPSHOT'
+group = 'dev.kat'
+version = '1.0-BETA'
 
 repositories {
     mavenCentral()
@@ -16,4 +17,18 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+build {
+    // (shadowJar)
+}
+
+jar {
+    manifest {
+        attributes("Main-Class": "dev.kat.Main")
+    }
+}
+
+shadowJar {
+    // in case you add external dependencies
 }
