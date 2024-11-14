@@ -26,8 +26,9 @@ public class Game {
     }
 
     private void initalizeClasses() {
-        player = new Player(200,200, (int)(64*SCALE), (int)(40*SCALE));
         levelManager = new LevelManager(this);
+        player = new Player(200,200, (int)(64*SCALE), (int)(40*SCALE));
+        player.loadLevelData(levelManager.getCurrentLevel().getLevelData());
     }
 
     public void update() {

@@ -18,6 +18,7 @@ public class Player extends Entity {
     private Direction playerDirection = Direction.NONE;
     private boolean moving = false;
     private boolean attacking = false;
+    private int[][] lvlData;
 
     private final Set<Direction> pressedDirections;
 
@@ -29,12 +30,14 @@ public class Player extends Entity {
 
     public void update() {
         updateDirection();
+        updateHitbox();
         setAnimation();
         updatePosition();
         updateAnimationTick();
     }
 
     public void render(Graphics g) {
+        System.out.println("test?");
         g.drawImage(
                 animations[playerAction.getValue()][animationIndex],
                 (int)x,
@@ -43,6 +46,8 @@ public class Player extends Entity {
                 80,
                 null
         );
+        System.out.println("hitbox?");
+        drawHitbox(g);
     }
 
     private void updateDirection() {
@@ -127,6 +132,10 @@ public class Player extends Entity {
                     animations[actionIndex][i] = image.getSubimage(i * 64, actionIndex * 40, 64, 40);
                 }
             }
+    }
+
+    public void loadLevelData(int[][] lvlData) {
+        this.lvlData = lvlData;
     }
 
     public void resetDir() {
