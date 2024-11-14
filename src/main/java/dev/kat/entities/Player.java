@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.Set;
 import dev.kat.utilities.LoadSave;
 
+import static dev.kat.utilities.HelperMethods.canMoveHere;
+
 
 public class Player extends Entity {
     private BufferedImage[][] animations;
@@ -37,7 +39,6 @@ public class Player extends Entity {
     }
 
     public void render(Graphics g) {
-        System.out.println("test?");
         g.drawImage(
                 animations[playerAction.getValue()][animationIndex],
                 (int)x,
@@ -46,7 +47,6 @@ public class Player extends Entity {
                 80,
                 null
         );
-        System.out.println("hitbox?");
         drawHitbox(g);
     }
 
@@ -112,13 +112,29 @@ public class Player extends Entity {
     }
 
     private void updatePosition() {
-        if (moving) {
-            switch (playerDirection) {
-                case LEFT -> x -= 1;
-                case UP -> y -= 1;
-                case RIGHT -> x += 1;
-                case DOWN -> y += 1;
-            }
+        if (!moving) return;
+
+        float xSpeed = 0;
+        float ySpeed = 0;
+
+        switch (playerDirection) {
+            case LEFT -> xSpeed = -1;
+            case RIGHT -> xSpeed = 1;
+            case UP -> ySpeed = -1;
+            case DOWN -> ySpeed = 1;
+        }
+
+        // Check next position collision
+        if (canMoveHere((int) (hitbox.x + xSpeed), (int) (hitbox.y + ySpeed), hitbox.width, hitbox.height, lvlData)) {
+            // Update hitbox position
+            hitbox.x += xSpeed;
+            hitbox.y += ySpeed;
+
+            // Update actual position
+            x += xSpeed;
+            y += ySpeed;
+        } else {
+            moving = false; // Stop moving if bump into a wall
         }
     }
 
